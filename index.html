@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Fire & Roblox - TV Like Gamer Official Hub</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4319698740955334"
+     crossorigin="anonymous"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #0d1117; color: #f0f6fc; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+        .app-container { width: 100%; max-width: 420px; background: #161b22; border-radius: 24px; box-shadow: 0 12px 30px rgba(0,0,0,0.7); overflow: hidden; border: 1px solid #30363d; position: relative; }
+        .header { background: linear-gradient(135deg, #1f6feb, #238636); padding: 18px; text-align: center; color: #fff; }
+        .header h1 { font-size: 17px; font-weight: 800; margin-bottom: 4px; }
+        .server-status { font-size: 11px; background: rgba(0, 255, 100, 0.25); color: #38d430; padding: 3px 10px; border-radius: 12px; display: inline-block; margin-bottom: 8px; border: 1px solid #238636; font-weight: bold; }
+        .user-badge { font-size: 12px; background: rgba(0, 0, 0, 0.25); padding: 4px 12px; border-radius: 15px; display: inline-block; margin-bottom: 8px; color: #ffe600; }
+        .token-card { background: rgba(0, 0, 0, 0.35); padding: 6px 16px; border-radius: 30px; display: inline-flex; align-items: center; gap: 8px; font-weight: bold; font-size: 16px; border: 1px solid rgba(255,255,255,0.2); }
+        .content { padding: 16px; }
+        #auth-screen { display: block; }
+        #dashboard-screen { display: none; }
+        
+        .nav-tabs { display: flex; gap: 4px; margin-bottom: 12px; background: #21262d; padding: 4px; border-radius: 10px; }
+        .tab-btn { flex: 1; background: transparent; border: none; color: #8b949e; padding: 7px; font-size: 11px; font-weight: bold; cursor: pointer; border-radius: 6px; }
+        .tab-btn.active { background: #ff4b2b; color: #fff; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .loader-screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(22, 27, 34, 0.96); z-index: 999; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+        .spinner { width: 40px; height: 40px; border: 4px solid #30363d; border-top: 4px solid #38d430; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 12px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .input-group { margin-bottom: 10px; text-align: left; }
+        .input-group label { display: block; font-size: 12px; color: #8b949e; margin-bottom: 4px; }
+        .input-group input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #30363d; background: #0d1117; color: #fff; font-size: 14px; outline: none; }
+        
+        .btn-auth { background: linear-gradient(90deg, #1f6feb, #238636); color: white; border: none; width: 100%; padding: 11px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }
+        .btn-google { background: #4285f4; color: white; border: none; width: 100%; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        
+        .section-title { font-size: 12px; color: #8b949e; margin-bottom: 8px; text-transform: uppercase; font-weight: 700; }
+        .box-card { background: linear-gradient(145deg, #21262d, #161b22); padding: 12px; border-radius: 12px; border: 1px solid #30363d; text-align: center; margin-bottom: 12px; }
+        .btn-action { background: #238636; color: white; border: none; padding: 9px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; width: 100%; margin-top: 6px; }
+
+        .store-list { display: flex; flex-direction: column; gap: 8px; }
+        .card { background: #21262d; padding: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #30363d; }
+        .card-info h3 { font-size: 13px; color: #f0f6fc; margin-bottom: 2px; }
+        .card-info p { font-size: 11px; color: #38d430; font-weight: 600; }
+        .btn-redeem { background: #238636; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; padding: 15px; z-index: 99; }
+        .modal-content { background: #161b22; padding: 18px; border-radius: 16px; text-align: center; max-width: 320px; width: 100%; border: 1px solid #30363d; }
+        .code-box { background: #0d1117; padding: 10px; border-radius: 8px; font-size: 14px; font-weight: bold; color: #58a6ff; margin: 10px 0; border: 1px dashed #30363d; }
+        .close-btn { background: #da3633; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <div class="server-status">🔒 TV Like Gamer Dedicated Mainframe</div>
+            <h1>Free Fire & Roblox Hub</h1>
+            <div id="user-display" class="user-badge">ईमेल डिटेक्ट हो रहा है...</div><br>
+            <div class="token-card">
+                <span>🪙</span>
+                <span id="token-count">0</span>
+                <span>टोकन</span>
+            </div>
+        </div>
+
+        <div class="loader-screen" id="loader-screen">
+            <div class="spinner"></div>
+            <div class="loader-text" id="loader-msg">TV Like Gamer सर्वर से कनेक्ट हो रहा है...</div>
+        </div>
+
+        <div class="content">
+            <!-- Auth Screen -->
+            <div id="auth-screen">
+                <form id="login-form" onsubmit="handleServerAuth(event)">
+                    <div class="section-title">TV Like Gamer सिक्योर लॉगिन</div>
+                    <button type="button" class="btn-google" onclick="simulateGoogleEmailDetect()">Google 1-Tap Email Detect</button>
+                    <div style="margin:8px 0; color:#8b949e; font-size:11px; text-align:center;">या</div>
+                    <div class="input-group">
+                        <label>ईमेल एड्रेस</label>
+                        <input type="email" id="email-input" placeholder="example@gmail.com" required>
+                    </div>
+                    <button type="submit" class="btn-auth">CONNECT 🚀</button>
+                </form>
+            </div>
+
+            <!-- Dashboard -->
+            <div id="dashboard-screen">
+                <div class="nav-tabs">
+                    <button class="tab-btn active" onclick="switchTab('talent-tab')">🎤 परफॉर्मेंस</button>
+                    <button class="tab-btn" onclick="switchTab('earn-tab')">🤖 बोट & ऐड ज़ोन</button>
+                    <button class="tab-btn" onclick="switchTab('store-tab')">🎁 गेम स्टोर</button>
+                </div>
+
+                <div id="talent-tab" class="tab-content active">
+                    <div class="section-title">डांस और सिंगिंग चैलेंज</div>
+                    <div class="box-card">
+                        <button class="btn-action" onclick="recordTalentVideo()">🔴 परफॉर्मेंस अपलोड करें</button>
+                    </div>
+                    <div class="section-title">वोट्स स्टेटस</div>
+                    <div class="box-card" style="text-align:left;">
+                        <span id="my-votes">⭐ 0 वोट्स मिले</span>
+                    </div>
+                </div>
+
+                <div id="earn-tab" class="tab-content">
+                    <div class="section-title">ऑटो-बोट ऐड फार्मिंग ज़ोन</div>
+                    <div class="box-card">
+                        <p style="font-size: 11px; color: #8b949e; margin-bottom: 8px;">बोट्स बैकग्राउंड में फंड जमा कर रहे हैं।</p>
+                        <button class="btn-action" onclick="watchAd()">📺 मैनुअल ऐड देखें (+10 कॉइन)</button>
+                    </div>
+                </div>
+
+                <div id="store-tab" class="tab-content">
+                    <div class="section-title">TV Like Gamer रिडीम स्टोर (FF & Roblox)</div>
+                    <div class="store-list">
+                        <div class="card"><div class="card-info"><h3>₹5 रिडीम कोड</h3><p>100 टोकन</p></div><button type="button" class="btn-redeem" onclick="redeemCode(100, '₹5', '₹5 रिडीम कोड')">रिडीम</button></div>
+                        <div class="card"><div class="card-info"><h3>₹10 रिडीम कोड</h3><p>500 टोकन</p></div><button type="button" class="btn-redeem" onclick="redeemCode(500, '₹10', '₹10 रिडीम कोड')">रिडीम</button></div>
+                        <div class="card"><div class="card-info"><h3>₹300 रिडीम कोड</h3><p>1000 टोकन</p></div><button type="button" class="btn-redeem" onclick="redeemCode(1000, '₹300', '₹300 रिडीम कोड')">रिडीम</button></div>
+                        <div class="card"><div class="card-info"><h3>₹500 रिडीम कोड</h3><p>600 टोकन</p></div><button type="button" class="btn-redeem" onclick="redeemCode(600, '₹500', '₹500 रिडीम कोड')">रिडीम</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="redeem-modal">
+        <div class="modal-content">
+            <h2 style="color: #38d430; margin-bottom: 6px; font-size: 16px;">TV Like Gamer द्वारा सत्यापित 🎉</h2>
+            <p id="modal-text" style="color: #8b949e; font-size: 12px;">आपका नया कोड:</p>
+            <div class="code-box" id="generated-code">TVG-XXXX-XXXX</div>
+            <button type="button" class="close-btn" onclick="closeRedeemModal()">बंद करें</button>
+        </div>
+    </div>
+
+    <script>
+        // TV Like Gamer Dedicated Server Engine with Anti-Cheat & Permanent Ban System
+        const TV_LIKE_GAMER_SERVER = {
+            name: "TV Like Gamer Mainframe",
+            dailyCodes: {
+                '₹5': ["TVG-FF5-9821-AZXQ", "TVG-FF5-1124-PLMK"],
+                '₹10': ["TVG-FF10-7741-BHYT"],
+                '₹300': ["TVG-FF300-8812-WXYZ", "TVG-FF300-4490-JKLM"],
+                '₹500': ["TVG-FF500-6621-POIU"]
+            },
+            verifyUser: function(email) {
+                let userKey = 'tvg_server_user_' + email;
+                let existingUser = localStorage.getItem(userKey);
+                
+                if (!existingUser) {
+                    let initialData = { 
+                        email: email, 
+                        tokens: 100, 
+                        adsWatched: 0, 
+                        danceTasksCompleted: 0, 
+                        isBanned: false, 
+                        lastRedeem: 0 
+                    };
+                    localStorage.setItem(userKey, JSON.stringify(initialData));
+                    return { tokens: 100, isNew: true, isBanned: false };
+                } else {
+                    let parsed = JSON.parse(existingUser);
+                    
+                    // एंटी-चीट जाँच: यदि यूजर पहले से बैन है
+                    if (parsed.isBanned) {
+                        return { isBanned: true };
+                    }
+
+                    // एंटी-चीट जाँच: यदि बिना कोई ऐड देखे या डांस किए अचानक 1000 या अधिक कॉइन्स/टोकन मिल गए हैं (हैकिंग प्रयास)
+                    if (parsed.tokens >= 1000 && parsed.adsWatched === 0 && parsed.danceTasksCompleted === 0) {
+                        parsed.isBanned = true;
+                        localStorage.setItem(userKey, JSON.stringify(parsed));
+                        return { isBanned: true };
+                    }
+
+                    return { tokens: parsed.tokens, isNew: false, isBanned: false };
+                }
+            },
+            updateUserData: function(email, newTokens, adsCountAdd, danceCountAdd) {
+                let userKey = 'tvg_server_user_' + email;
+                let existingUser = localStorage.getItem(userKey);
+                if (existingUser) {
+                    let parsed = JSON.parse(existingUser);
+                    parsed.tokens = newTokens;
+                    if (adsCountAdd) parsed.adsWatched += adsCountAdd;
+                    if (danceCountAdd) parsed.danceTasksCompleted += danceCountAdd;
+                    
+                    // फिर से चीटिंग चेक
+                    if (parsed.tokens >= 1000 && parsed.adsWatched === 0 && parsed.danceTasksCompleted === 0) {
+                        parsed.isBanned = true;
+                    }
+                    
+                    localStorage.setItem(userKey, JSON.stringify(parsed));
+                }
+            },
+            antiCheatCheck: function(email) {
+                let userKey = 'tvg_server_user_' + email;
+                let data = JSON.parse(localStorage.getItem(userKey));
+                let now = Date.now();
+                if (data && data.isBanned) return false;
+                if (data && data.lastRedeem && (now - data.lastRedeem < 4000)) {
+                    return false; 
+                }
+                if(data) {
+                    data.lastRedeem = now;
+                    localStorage.setItem(userKey, JSON.stringify(data));
+                }
+                return true;
+            }
+        };
+
+        let currentServerEmail = null, userTokens = 0;
+
+        function showLoader(msg, cb) {
+            let loader = document.getElementById('loader-screen');
+            document.getElementById('loader-msg').innerText = msg;
+            loader.style.display = 'flex';
+            setTimeout(() => { loader.style.display = 'none'; if (cb) cb(); }, 800);
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function simulateGoogleEmailDetect() {
+            let sampleEmail = "chandanmalakar@gmail.com";
+            document.getElementById('email-input').value = sampleEmail;
+            showLoader("TV Like Gamer सर्वर ईमेल डिटेक्ट कर रहा है...", () => {
+                processServerLogin(sampleEmail);
+            });
+        }
+
+        function handleServerAuth(e) {
+            e.preventDefault();
+            let email = document.getElementById('email-input').value.trim();
+            if (!email || !email.includes('@')) { alert("कृपया वैध ईमेल दर्ज करें!"); return false; }
+            showLoader("TV Like Gamer सर्वर कनेक्ट हो रहा है...", () => {
+                processServerLogin(email);
+            });
+            return false;
+        }
+
+        function processServerLogin(email) {
+            let res = TV_LIKE_GAMER_SERVER.verifyUser(email);
+            
+            if (res.isBanned) {
+                alert("🚨 सुरक्षा चेतावनी (Permanent Ban):\nयह ईमेल आईडी संदिग्ध गतिविधि (अनधिकृत हैक या बिना ऐड के कॉइन जनरेट करने) के कारण परमानेंट बैन कर दी गई है। आप इस ईमेल से लॉगिन नहीं कर सकते!");
+                return;
+            }
+
+            currentServerEmail = email;
+            userTokens = res.tokens;
+
+            document.getElementById('user-display').innerText = `👤 ${email.split('@')[0]}`;
+            document.getElementById('token-count').innerText = userTokens;
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('dashboard-screen').style.display = 'block';
+
+            if (res.isNew) {
+                alert("🎉 TV Like Gamer सर्वर ने नया ईमेल डिटेक्ट किया!\n• 100 बोनस टोकन आपके खाते में जुड़ गए हैं।");
+            }
+        }
+
+        function recordTalentVideo() {
+            showLoader("TV Like Gamer सर्वर पर परफॉर्मेंस अपलोड हो रही है...", () => {
+                let votes = Math.floor(Math.random() * 4) + 2;
+                let earned = votes * 15;
+                userTokens += earned;
+                
+                // टोकन और डांस टास्क काउंट अपडेट करें
+                TV_LIKE_GAMER_SERVER.updateUserData(currentServerEmail, userTokens, 0, 1);
+                
+                document.getElementById('token-count').innerText = userTokens;
+                document.getElementById('my-votes').innerText = `⭐ ${votes} वोट्स मिले!`;
+                alert(`✅ वीडियो वेरीफाई हुआ!\n• ${earned} टोकन सर्वर द्वारा जुड़ गए।`);
+            });
+        }
+
+        function watchAd() {
+            showLoader("ऑटो-बोट ऐड प्रोसेस हो रहा है...", () => {
+                userTokens += 10;
+                
+                // टोकन और ऐड वॉच काउंट अपडेट करें
+                TV_LIKE_GAMER_SERVER.updateUserData(currentServerEmail, userTokens, 1, 0);
+                
+                document.getElementById('token-count').innerText = userTokens;
+                alert("✅ TV Like Gamer बोट सिस्टम द्वारा +10 टोकन जोड़े गए।");
+            });
+        }
+
+        function redeemCode(cost, key, category) {
+            let userKey = 'tvg_server_user_' + currentServerEmail;
+            let checkData = JSON.parse(localStorage.getItem(userKey));
+            
+            // अगर हैक पकड़ा गया हो
+            if (checkData && (checkData.isBanned || (checkData.tokens >= 1000 && checkData.adsWatched === 0 && checkData.danceTasksCompleted === 0))) {
+                alert("🚨 एंटी-चीट बैन: आपके अकाउंट में बिना ऐड या टास्क के सीधे 1000 कॉइन पाए गए हैं। अकाउंट परमानेंट बैन कर दिया गया है!");
+                location.reload();
+                return;
+            }
+
+            if (!TV_LIKE_GAMER_SERVER.antiCheatCheck(currentServerEmail)) {
+                alert("⚠️ एंटी-चीट सुरक्षा प्रणाली: कृपया थोड़ा इंतज़ार करें।");
+                return;
+            }
+
+            if (userTokens < cost) {
+                alert(`इस ${category} के लिए सर्वर पर कम से कम ${cost} टोकन चाहिए!`);
+                return;
+            }
+
+            let codeList = TV_LIKE_GAMER_SERVER.dailyCodes[key];
+            if (!codeList || codeList.length === 0) {
+                alert("TV Like Gamer सर्वर आज के नए कोड अपडेट कर रहा है, कृपया प्रतीक्षा करें।");
+                return;
+            }
+
+            let assignedCode = codeList.shift(); 
+            userTokens -= cost;
+            TV_LIKE_GAMER_SERVER.updateUserData(currentServerEmail, userTokens, 0, 0);
+            
+            document.getElementById('token-count').innerText = userTokens;
+            document.getElementById('modal-text').innerText = `${category} का आपका नया सत्यापित कोड:`;
+            document.getElementById('generated-code').innerText = assignedCode;
+            document.getElementById('redeem-modal').style.display = 'flex';
+        }
+
+        function closeRedeemModal() { document.getElementById('redeem-modal').style.display = 'none'; }
+    </script>
+</body>
+</html>
